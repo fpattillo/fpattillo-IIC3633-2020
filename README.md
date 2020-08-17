@@ -1,1 +1,1 @@
-# lecturasIIC3633-2020 Felipe Pattillo (17640598)
+# Comentarios y prácticos Felipe Pattillo (17640598)
