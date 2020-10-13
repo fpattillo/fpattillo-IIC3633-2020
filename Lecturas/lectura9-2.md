@@ -1,1 +1,13 @@
 # Comentario "Carousel Personalization in Music Streaming Apps with Contextual Bandits"
+
+## Introducción
+
+En este texto se detalla la recomendación de música en la aplicación Deezer (similar a Spotify y Apple Music). Específicamente, se habla de la recomendación usando "carruseles", nombre que se le da a "displays" que contienen una selección de imágenes de discos o artistas. Estos ítems imitan un carrusel ya que hay ítems que no están visibles salvo que se navegue deslizando ("swiping"). El desafío tiene más de un aspecto a considerar. Principalmente, qué ítems va a contener el carrusel, luego, qué ítems estarán a la vista en el estado inicial del carrusel. También creo que debe afectar el largo del carrusel, ya que es menos probable que el usuario considere todas las opciones mientras más largo sea este. 
+
+Lo que los autores proponen para resolver este problema de recomendación es un sistema recomendador que implemente la estrategia "Multi Armed Bandit" (refiérase a https://github.com/fpattillo/fpattillo-IIC3633-2020/blob/master/Lecturas/lectura9-1.md para una breve explicación de este experimento). Los K "brazos" serán todas los posibles ítems para un carrusel (ya sea canciones, álbumes, artístas, playlists, etc.) y se deberán elegir L elementos para incluir en una iteración del carrusel, con el fin de maximizar la proporción display-reproducción. Luego de un periodo definido de tiempo, se registra esta proporción para cada usuario, y comienza la siguiente iteración.
+
+## Resolución del problema :hammer: :wrench:
+
+En primer lugar, se plantea un solución "naïve" del problema, que sería correr el algoritmo "Multi Armed Bandit" (MAB) para cada uno de los N usuarios. Es decir, N veces cada periodo de reformulación t. Se describen dos soluciones, una consiste en definir Q "clusters" de usuarios con gustos similares, y correr dicho algoritmo solamente Q veces cada periodo. La otra solución consiste en resumir las preferencias de cada usuario a vectores de dimensión D, y en resumir también las características de cada brazo a vectores de la misma dimensión, para luego obtener un puntaje usando una función que recibe el producto de estos vectores. Usando estos puntajes, se pueden desplegar los top-L elementos en términos de puntaje, reduciéndose también el tiempo de ejecución ya que se define que D << N.
+
+En mi opinión, ambas soluciones parecen ser bastante realistas y aplicables. Ambas pueden ser definidas para favorecer la precisión, en el primer caso aumentando la cantidad de clusters, siendo más estricto con las diferencias de los usuarios, y en el segundo caso aumentando las características descritas con los vectores. También es importante notar que ambos métodos aumentan en complejidad al intentar aumentar su precisión.
